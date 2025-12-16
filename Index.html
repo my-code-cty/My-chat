@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Web Chat Online</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: Arial, sans-serif; background:#f2f2f2; margin:0; }
+    .chat-box { max-width:600px; margin:40px auto; background:#fff; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,.1); display:flex; flex-direction:column; height:80vh; }
+    h2 { text-align:center; margin:10px 0; }
+    #messages { flex:1; padding:10px; overflow-y:auto; }
+    .msg { margin:6px 0; }
+    .name { font-weight:bold; color:#2563eb; }
+    .input-box { display:flex; padding:10px; border-top:1px solid #ddd; }
+    input { flex:1; padding:10px; border-radius:8px; border:1px solid #ccc; }
+    button { margin-left:6px; padding:10px 14px; border:none; border-radius:8px; background:#2563eb; color:white; }
+  </style>
+</head>
+<body>
+  <div class="chat-box">
+    <h2>💬 Chat Online</h2>
+    <div id="messages"></div>
+    <div class="input-box">
+      <input id="name" placeholder="Tên của bạn" />
+      <input id="message" placeholder="Nhập tin nhắn..." />
+      <button onclick="sendMessage()">Gửi</button>
+    </div>
+  </div>  <!-- Firebase -->  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>  <script>
+    // 🔹 THAY BẰNG FIREBASE CONFIG CỦA BẠN
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const chatRef = db.ref("messages");
+
+    function sendMessage() {
+      const name = document.getElementById("name").value || "Ẩn danh";
+      const msg = document.getElementById("message").value;
+      if (!msg) return;
+
+      chatRef.push({ name, msg });
+      document.getElementById("message").value = "";
+    }
+
+    chatRef.on("child_added", snapshot => {
+      const data = snapshot.val();
+      const div = document.createElement("div");
+      div.className = "msg";
+      div.innerHTML = `<span class='name'>${data.name}:</span> ${data.msg}`;
+      document.getElementById("messages").appendChild(div);
+    });
+  </script>
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCKvKSgfJOilIIsnKI0RWVokXsV37li-Qw",
+    authDomain: "my-chat-96845.firebaseapp.com",
+    projectId: "my-chat-96845",
+    storageBucket: "my-chat-96845.firebasestorage.app",
+    messagingSenderId: "546878639396",
+    appId: "1:546878639396:web:3152a78fc0c455249677b1",
+    measurementId: "G-5NXX37E2LD"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+  </body>
+</html>
