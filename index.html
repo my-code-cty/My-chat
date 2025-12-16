@@ -22,52 +22,39 @@
 <body>
   <div class="card">
     <h2>💬 Web Chat</h2>
-    <button id="login">Đăng nhập bằng Google</button><div id="chat">
-  <div class="user" id="user"></div>
-  <ul id="messages"></ul>
-  <div class="input">
-    <input id="text" placeholder="Nhập tin nhắn..." />
-    <button class="send" onclick="send()">Gửi</button>
-  </div>
-</div>
-
+    <div id="chat" style="display:flex">
+      <div class="user" id="user"></div>
+      <ul id="messages"></ul>
+      <div class="input">
+        <input id="text" placeholder="Nhập tin nhắn..." />
+        <button class="send" onclick="send()">Gửi</button>
+      </div>
+    </div>
   </div><script>
-  // 🔥 DÁN CẤU HÌNH FIREBASE CỦA BẠN VÀO ĐÂY
-  const firebaseConfig = { 
-  apiKey: "AIzaSy...",
-  authDomain: "my-chat-d44bf.firebaseapp.com",
-  databaseURL: "https://my-chat-d44bf-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "my-chat-d44bf",
-  storageBucket: "my-chat-d44bf.appspot.com",
-  messagingSenderId: "560527646922",
-  appId: "1:560527646922:web:c5cd1ee9f7538b43019433"
-    
+  // 🔥 CẤU HÌNH FIREBASE
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "XXXX",
+    appId: "XXXX"
   };
 
   firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
+  // ❌ KHÔNG DÙNG AUTH
   const db = firebase.firestore();
 
   const loginBtn = document.getElementById('login');
   const chatBox = document.getElementById('chat');
   const userDiv = document.getElementById('user');
   const msgList = document.getElementById('messages');
-  let currentUser;
+  let currentUser = { uid: 'guest-' + Math.random().toString(36).slice(2), displayName: 'Khách' };
 
-  loginBtn.onclick = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
-  };
+  
 
-  auth.onAuthStateChanged(user => {
-    if(user){
-      currentUser = user;
-      loginBtn.style.display='none';
-      chatBox.style.display='flex';
-      userDiv.innerText = `Xin chào ${user.displayName}`;
-      loadMessages();
-    }
-  });
+  userDiv.innerText = 'Chế độ khách';
+loadMessages();
 
   function send(){
     const text = document.getElementById('text').value;
