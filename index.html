@@ -28,12 +28,31 @@
 
 <script>
   // 🔥 DÁN firebaseConfig của bạn vào đây
+  const firebaseConfig = { 
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
-    apiKey: "API_KEY",
-    authDomain: "PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://PROJECT_ID.firebaseio.com",
-    projectId: "PROJECT_ID"
+    apiKey: "AIzaSyCAAd_FGQiscs9UlBPHl45tf9etYWPJKjc",
+    authDomain: "my-chat-d44bf.firebaseapp.com",
+    databaseURL: "https://my-chat-d44bf-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "my-chat-d44bf",
+    storageBucket: "my-chat-d44bf.firebasestorage.app",
+    messagingSenderId: "560527646922",
+    appId: "1:560527646922:web:c5cd1ee9f7538b43019433",
+    measurementId: "G-PFPC4D4VNR"
   };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script> };
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
